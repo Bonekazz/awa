@@ -7,6 +7,7 @@ import EditTimerModal from "./EditTimerModal";
 import EnableSound from "./EnableSound";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import EnableSoundModal from "./EnableSoundModal";
 
 export default function TimersManager() {
   const [timers, setTimers] = useState<any | null>(null);
@@ -60,6 +61,7 @@ export default function TimersManager() {
       </div>
 
       <EditTimerModal timers={timers} setTimers={setTimers} selectedId={selectedTimer} setSelectedId={setSelectedTimer}/>
+      <EnableSoundModal />
 
       <div className="flex gap-1 items-center w-full justify-center py-8">
         <span>developed with</span>
