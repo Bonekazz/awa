@@ -2,20 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  .animated-button {
+    @apply active:scale-95 transition-all ease-in-out;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  .cancel-btn {
+    @apply bg-black/10;
+  }
+
+  .action-btn {
+    @apply bg-black text-white;
+  }
+
+  .butt {
+    @apply animated-button px-5 py-3 rounded-xl focus:outline-none cursor-pointer;
+  }
+
+  .disabled-btn {
+    @apply opacity-30 cursor-not-allowed;
+  }
+
+  .text-breaked {
+    @apply max-w-full whitespace-pre-wrap break-words;
+  }
+
 }
