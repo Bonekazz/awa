@@ -14,13 +14,17 @@ export default function TimersManager() {
   const [selectedTimer, setSelectedTimer] = useState<string>("");
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean | null>(null);
 
   useEffect(() => {
     const localData = localStorage.getItem("timers");
     if (!localData) {setTimers([]); return;}
     setTimers(JSON.parse(localData));
-    setSoundEnabled(JSON.parse(localStorage.getItem("isSoundEnabled")!) || false);
+    audioRef.current && audioRef.current.load();
+    const isSoundEnabled = localStorage.getItem("isSoundEnabled");
+    if (!isSoundEnabled) return;
+    console.log(JSON.parse(isSoundEnabled));
+    setSoundEnabled(JSON.parse(isSoundEnabled));
   }, []);
 
   function handleSound() {
@@ -38,14 +42,14 @@ export default function TimersManager() {
       <div className="flex flex-col gap-5">
         <div className="flex gap-8">
           <button className="butt cancel-btn w-fit" onClick={() => {openModal("edit-timer-modal")}}>adicionar novo</button>
-          <EnableSound isEnabled={soundEnabled} handleSound={handleSound}/>
+          { soundEnabled !== null &&  <EnableSound isEnabled={soundEnabled} handleSound={handleSound}/>}
         </div>
         <ul className={
           `flex flex-col gap-3 justify-center items-center 
           md:flex-row md:flex-wrap md:justify-normal md:items-start
           pb-8
         `}>
-          { timers && timers.map((timer: any, index: number) => {
+          { soundEnabled !== null && timers && timers.map((timer: any, index: number) => {
             return (
               <li key={index} className="w-full md:w-fit border rounded-xl p-5">
                 <Timer 
